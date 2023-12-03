@@ -18,25 +18,21 @@ impl Display for Error {
     }
 }
 
-fn day_1_pt1() -> Result<i64, Error> {
-    let input = include_str!("input.txt");
-
+fn day_1_pt1(input: &str) -> Result<i64, Error> {
     let numbers = input.lines().map(|line| {
         let digits: Vec<_> = line.chars().filter(|c| c.is_numeric()).collect();
         if digits.is_empty() {
             Err(Error::InsufficientDigits)
         } else {
-            match str::parse(&format!("{}{}", digits[0], digits[digits.len() - 1])) {
-                Ok(num) => Ok(num),
-                Err(err) => Err(Error::Other(Box::new(err))),
-            }
+            str::parse(&format!("{}{}", digits[0], digits[digits.len() - 1]))
+                .map_err(|err| Error::Other(Box::new(err)))
         }
     }).collect::<Result<Vec<i64>, Error>>()?;
 
     Ok(numbers.iter().sum())
 }
 
-fn day_1_pt2() -> Result<i64, Error> {
+fn day_1_pt2(input: &str) -> Result<i64, Error> {
     const NUM_TOKENS: [(&str, &str); 20] = [
         ("0", "0"),
         ("1", "1"),
@@ -60,8 +56,6 @@ fn day_1_pt2() -> Result<i64, Error> {
         ("eight", "8"),
     ];
 
-    let input = include_str!("input.txt");
-
     let numbers = input.lines().map(|line| {
         let mut digits = Vec::new();
         for start in 0..line.len() {
@@ -77,10 +71,8 @@ fn day_1_pt2() -> Result<i64, Error> {
         if digits.is_empty() {
             Err(Error::InsufficientDigits)
         } else {
-            match str::parse(&format!("{}{}", digits[0], digits[digits.len() - 1])) {
-                Ok(num) => Ok(num),
-                Err(err) => Err(Error::Other(Box::new(err))),
-            }
+            str::parse(&format!("{}{}", digits[0], digits[digits.len() - 1]))
+                .map_err(|err| Error::Other(Box::new(err)))
         }
     }).collect::<Result<Vec<i64>, Error>>()?;
 
@@ -90,17 +82,11 @@ fn day_1_pt2() -> Result<i64, Error> {
 fn main() {
     println!("Advent of Code 2023");
 
-    let day_1_pt1 = match day_1_pt1() {
-        Ok(answer) => answer.to_string(),
-        Err(err) => err.to_string(),
-    };
+    let input = include_str!("input.txt");
+
+    let day_1_pt1 = match day_1_pt1(input) { Ok(answer) => answer.to_string(), Err(err) => err.to_string() };
+    let day_1_pt2 = match day_1_pt2(input) { Ok(answer) => answer.to_string(), Err(err) => err.to_string() };
 
     println!("Day 1 (Part 1): {day_1_pt1}");
-
-    let day_1_pt2 = match day_1_pt2() {
-        Ok(answer) => answer.to_string(),
-        Err(err) => err.to_string(),
-    };
-
     println!("Day 1 (Part 2): {day_1_pt2}");
 }
