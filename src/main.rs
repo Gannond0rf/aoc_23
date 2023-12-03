@@ -59,11 +59,11 @@ fn day_1_pt2(input: &str) -> Result<i64, Error> {
     let numbers = input.lines().map(|line| {
         let mut digits = Vec::new();
         for start in 0..line.len() {
-            for token in NUM_TOKENS {
-                if (start + token.0.len()) > line.len() { continue };
-                let slice = &line[start..(start + token.0.len())];
-                if slice == token.0 {
-                    digits.push(token.1);
+            for (token, digit) in NUM_TOKENS {
+                if (start + token.len()) > line.len() { continue };
+                let slice = &line[start..(start + token.len())];
+                if slice == token {
+                    digits.push(digit);
                     break;
                 }
             }
