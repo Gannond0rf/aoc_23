@@ -1,21 +1,15 @@
 use std::fmt::Display;
 
+fn main() {
+    println!("Advent of Code 2023");
 
-#[derive(Debug)]
-pub enum Error {
-    Other(Box<dyn std::error::Error>),
-    InsufficientDigits,
-}
+    let input = include_str!("day1_input.txt");
 
-impl std::error::Error for Error {}
+    let day_1_pt1 = match day_1_pt1(input) { Ok(answer) => answer.to_string(), Err(err) => err.to_string() };
+    let day_1_pt2 = match day_1_pt2(input) { Ok(answer) => answer.to_string(), Err(err) => err.to_string() };
 
-impl Display for Error {
-    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        match self {
-            Error::Other(err) => write!(f, "{err}"),
-            Error::InsufficientDigits => write!(f, "Insufficient digits"),
-        }
-    }
+    println!("Day 1 (Part 1): {day_1_pt1}");
+    println!("Day 1 (Part 2): {day_1_pt2}");
 }
 
 fn day_1_pt1(input: &str) -> Result<i64, Error> {
@@ -79,14 +73,19 @@ fn day_1_pt2(input: &str) -> Result<i64, Error> {
     Ok(numbers.iter().sum())
 }
 
-fn main() {
-    println!("Advent of Code 2023");
+#[derive(Debug)]
+pub enum Error {
+    Other(Box<dyn std::error::Error>),
+    InsufficientDigits,
+}
 
-    let input = include_str!("day1_input.txt");
+impl std::error::Error for Error {}
 
-    let day_1_pt1 = match day_1_pt1(input) { Ok(answer) => answer.to_string(), Err(err) => err.to_string() };
-    let day_1_pt2 = match day_1_pt2(input) { Ok(answer) => answer.to_string(), Err(err) => err.to_string() };
-
-    println!("Day 1 (Part 1): {day_1_pt1}");
-    println!("Day 1 (Part 2): {day_1_pt2}");
+impl Display for Error {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            Error::Other(err) => write!(f, "{err}"),
+            Error::InsufficientDigits => write!(f, "Insufficient digits"),
+        }
+    }
 }
