@@ -82,7 +82,7 @@ fn day_1_pt2(input: &str) -> Result<i64, Error> {
 fn main() {
     println!("Advent of Code 2023");
 
-    let input = include_str!("input.txt");
+    let input = include_str!("day1_input.txt");
 
     let day_1_pt1 = match day_1_pt1(input) { Ok(answer) => answer.to_string(), Err(err) => err.to_string() };
     let day_1_pt2 = match day_1_pt2(input) { Ok(answer) => answer.to_string(), Err(err) => err.to_string() };
