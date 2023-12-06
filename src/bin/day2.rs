@@ -5,19 +5,12 @@ fn main() {
 
 	let input = include_str!("day2_input.txt");
 
-	let result = match day2_pt1(input) {
-		Ok(result) => result.to_string(),
-		Err(err) => err.to_string(),
-	};
-
+	let result = match day2_pt1(input) { Ok(result) => result.to_string(), Err(err) => err.to_string(), };
 	println!("Day 2 (part 1): {result}");
 
-	let result = match day2_pt2(input) {
-		Ok(result) => result.to_string(),
-		Err(err) => err.to_string(),
-	};
-
+	let result = match day2_pt2(input) { Ok(result) => result.to_string(), Err(err) => err.to_string(), };
 	println!("Day 2 (part 2): {result}");
+
 }
 
 fn day2_pt1(input: &str) -> Result<usize, Error> {
