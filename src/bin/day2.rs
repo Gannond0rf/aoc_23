@@ -56,7 +56,7 @@ fn day2_pt2(input: &str) -> Result<usize, Error> {
 		if max_values.is_empty() {
 			0
 		} else {
-			max_values.values().product::<usize>()
+			max_values.values().product()
 		}
 	})
 	.sum();
