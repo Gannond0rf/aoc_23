@@ -56,9 +56,7 @@ fn day2_pt2(input: &str) -> Result<usize, Error> {
 		if max_values.is_empty() {
 			0
 		} else {
-			let mut power = 1;
-			max_values.iter().for_each(|(_, val)| power *= val);
-			power
+			max_values.values().product::<usize>()
 		}
 	})
 	.sum();
