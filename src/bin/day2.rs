@@ -82,20 +82,11 @@ fn parse(line: &str) -> Result<Game, Error> {
 			if cubes.len() != 2 {
 				Err(Error::WrongNumberOfParts)
 			} else {
-				let colour = match cubes[1] {
-					"blue" => Ok(Colour::Blue),
-					"red" => Ok(Colour::Red),
-					"green" => Ok(Colour::Green),
-					_ => Err(Error::InvalidColour)
-				};
-				let count: Result<usize, Error> = str::parse(cubes[0])
-					.map_err(|err| Error::Other(Box::new(err)));
+				let colour: Colour = cubes[1].try_into()?;
+				let count: usize = str::parse(cubes[0])
+					.map_err(|err| Error::Other(Box::new(err)))?;
 
-				match (colour, count) {
-					(Ok(colour), Ok(count)) => Ok((colour, count)),
-					(Err(err), _) => Err(err),
-					(_, Err(err)) => Err(err),
-				}
+				Ok((colour, count))
 			}
 		}).collect::<Result<Vec<_>, Error>>()
 	}).collect::<Result<Vec<_>, Error>>()?;
@@ -114,6 +105,19 @@ enum Colour {
 	Blue,
 	Red,
 	Green
+}
+
+impl TryFrom<&str> for Colour {
+    type Error = Error;
+
+    fn try_from(value: &str) -> Result<Self, Self::Error> {
+        match value {
+			"red" => Ok(Self::Red),
+			"green" => Ok(Self::Green),
+			"blue" => Ok(Self::Blue),
+			_ => Err(Error::InvalidColour),
+		}
+    }
 }
 
 #[derive(Debug)]
